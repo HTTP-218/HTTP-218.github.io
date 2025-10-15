@@ -1,4 +1,3 @@
-
 ######################################################################################################
 #                                                                                                    #
 #                                            CAA-Tool.ps1                                            #
@@ -25,7 +24,7 @@ if (-not $ScanOnly) {
     }
 }
 
-$BaseURL = "https://raw.githubusercontent.com/HTTP-218/Endpoint_Verification/feature/modular-script"
+$BaseURL = "https://raw.githubusercontent.com/HTTP-218/Endpoint_Verification/main"
 
 Invoke-Expression (Invoke-RestMethod "$BaseURL/Modules/CAA-Logs.psm1")
 Invoke-Expression (Invoke-RestMethod "$BaseURL/Modules/CAA-Scan.psm1")
