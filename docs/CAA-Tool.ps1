@@ -38,8 +38,8 @@ Invoke-Expression (Invoke-RestMethod "$BaseURL/Functions/Get-CurrentUser.ps1")
 #====================================================================================================#
 $ErrorActionPreference = "Stop"
 $ProgressPreference = 'SilentlyContinue'
-$LogFilePath = "C:\Windows\Temp\CAA-Tool.log"
-Set-LogFilePath "C:\Windows\Temp\CAA-Tool.log"
+$LogFilePath = Join-Path $env:TEMP "CAA-Tool.log"
+Set-LogFilePath $LogFilePath
 $Summary = [System.Collections.Generic.List[string]]::new()
 $Username = Get-CurrentUser
 
@@ -50,7 +50,7 @@ Add-Type -AssemblyName System.Windows.Forms
 #====================================================================================================#
 #                                        [ Load JSON Config ]                                        #
 #====================================================================================================#
-$JSONPath = "C:\Windows\Temp\caa.json"
+$JSONPath = Join-Path $env:TEMP "caa.json"
 
 try {
     Invoke-WebRequest -Uri "$BaseURL/caa.json" -OutFile $JSONPath
