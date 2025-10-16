@@ -8,7 +8,7 @@ param(
     [switch]$ScanOnly = $false
 )
 
-#region functions
+#region [Functions]
 #====================================================================================================#
 #                                           [ Functions ]                                            #
 #====================================================================================================#
@@ -19,12 +19,13 @@ function Test-IsAdmin {
 
 if (-not $ScanOnly) {
     if (-not (Test-IsAdmin)) {
-        Write-Host "[ERROR] This script requires admin rights for remediation. Please run PowerShell as Administrator."
+        Write-Host "[ERROR] This script requires admin rights for remediation. Please run PowerShell as Administrator." -ForegroundColor Red
+        Read-Host "Press any key to exit"
         exit 1
     }
 }
 
-$BaseURL = "https://raw.githubusercontent.com/HTTP-218/Endpoint_Verification/main"
+$BaseURL = "https://raw.githubusercontent.com/HTTP-218/Endpoint_Verification/dev"
 
 Invoke-Expression (Invoke-RestMethod "$BaseURL/Modules/CAA-Logs.psm1")
 Invoke-Expression (Invoke-RestMethod "$BaseURL/Modules/CAA-Scan.psm1")
@@ -32,7 +33,7 @@ Invoke-Expression (Invoke-RestMethod "$BaseURL/Modules/CAA-Remediate.psm1")
 Invoke-Expression (Invoke-RestMethod "$BaseURL/Functions/Get-CurrentUser.ps1")
 #endregion
 
-#region variables
+#region [Variables]
 #====================================================================================================#
 #                                           [ Variables ]                                            #
 #====================================================================================================#
@@ -46,7 +47,7 @@ $Username = Get-CurrentUser
 Add-Type -AssemblyName System.Windows.Forms
 #endregion
 
-#region JSON
+#region [JSON]
 #====================================================================================================#
 #                                        [ Load JSON Config ]                                        #
 #====================================================================================================#
@@ -62,7 +63,7 @@ catch {
 }
 #endregion
 
-#region Main
+#region [Main]
 #====================================================================================================#
 #                                           [ Main Logic ]                                           #
 #====================================================================================================#
@@ -74,7 +75,7 @@ Set-Content -Path $LogFilePath -Encoding Unicode -Value "
 ##########################################################################
 "
 
-#region Windows Check
+#region [Windows Check]
 #============================
 $WindowsBuildCheck = Get-WindowsBuild -BuildRequirements $Variables.BuildRequirements
 if ($WindowsBuildCheck.IsCompliant -eq $false) {
@@ -82,7 +83,7 @@ if ($WindowsBuildCheck.IsCompliant -eq $false) {
 }
 #endregion
 
-#region Chrome Check
+#region [Chrome Check]
 #============================
 $ChromeCheck = Get-ChromeStatus -ChromeVersion $Variables.ChromeVersion
 if ($ChromeCheck.IsCompliant -eq $false -and $ChromeCheck.Message -eq "Chrome is not installed") {
@@ -107,7 +108,7 @@ elseif ($ChromeCheck.IsCompliant -eq $false) {
 }
 #endregion
 
-#region Extension Check
+#region [Extension Check]
 #============================
 $EVExtensionCheck = Get-EVExtensionStatus -Username $Username -ExtensionID $Variables.ExtensionID
 if ($EVExtensionCheck.IsCompliant -eq $false) {
@@ -115,7 +116,7 @@ if ($EVExtensionCheck.IsCompliant -eq $false) {
 }
 #endregion
 
-#region Firewall Check
+#region [Firewall Check]
 #============================
 $FirewallCheck = Get-FirewallStatus
 if (-not $FirewallCheck.IsCompliant) {
@@ -145,7 +146,7 @@ if (-not $FirewallCheck.IsCompliant) {
 }
 #endregion
 
-#region EV Helper App Check
+#region [EV Helper App Check]
 #============================
 $EVHelperAppCheck = Get-EVHelperStatus
 if ($EVHelperAppCheck.IsCompliant -eq $false) {
@@ -167,7 +168,7 @@ if ($EVHelperAppCheck.IsCompliant -eq $false) {
 }
 #endregion
 
-#region Cleanup
+#region [Cleanup]
 #====================================================================================================#
 #                                             [ Cleanup ]                                            #
 #====================================================================================================#
@@ -176,14 +177,14 @@ Write-Message -Message "========== Clean Up ==========" -Level "INFO"
 Write-Message -Message  "Deleting JSON file..." -Level "INFO"
 try {
     Remove-Item $JSONPath -Force
-    Write-Message -Message  "JSON file deleted" -Level "NOTICE"     
+    Write-Message -Message  "JSON file deleted" -Level "NOTICE"
 }
 catch {
     Write-Message -Message  "Failed to delete JSON file: $($_.Exception.Message)" -Level "WARN"
 }
 #endregion
 
-#region Summary
+#region [Summary]
 #====================================================================================================#
 #                                       [ Compliance Summary ]                                       #
 #====================================================================================================#
