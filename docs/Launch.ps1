@@ -7,22 +7,15 @@ $ToolPath = Join-Path $env:TEMP "CAA-Tool.ps1"
 Invoke-RestMethod $RepoURL -OutFile $ToolPath 
 
 $asciiBanner = @"
-
-
-                ██╗  ██╗████████╗████████╗██████╗       ██████╗  ██╗ █████╗          
-                ██║  ██║╚══██╔══╝╚══██╔══╝██╔══██╗      ╚════██╗███║██╔══██╗         
-                ███████║   ██║      ██║   ██████╔╝█████╗ █████╔╝╚██║╚█████╔╝         
-                ██╔══██║   ██║      ██║   ██╔═══╝ ╚════╝██╔═══╝  ██║██╔══██╗         
-                ██║  ██║   ██║      ██║   ██║           ███████╗ ██║╚█████╔╝         
-                ╚═╝  ╚═╝   ╚═╝      ╚═╝   ╚═╝           ╚══════╝ ╚═╝ ╚════╝          
-                                                                                     
- ██████╗ █████╗  █████╗    ████████╗ ██████╗  ██████╗ ██╗        ██████╗ ███████╗ ██╗
-██╔════╝██╔══██╗██╔══██╗   ╚══██╔══╝██╔═══██╗██╔═══██╗██║        ██╔══██╗██╔════╝███║
-██║     ███████║███████║█████╗██║   ██║   ██║██║   ██║██║        ██████╔╝███████╗╚██║
-██║     ██╔══██║██╔══██║╚════╝██║   ██║   ██║██║   ██║██║        ██╔═══╝ ╚════██║ ██║
-╚██████╗██║  ██║██║  ██║      ██║   ╚██████╔╝╚██████╔╝███████╗██╗██║     ███████║ ██║
- ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝      ╚═╝    ╚═════╝  ╚═════╝ ╚══════╝╚═╝╚═╝     ╚══════╝ ╚═╝
-
+           _   _ _____ _____ ____      ____  _  ___               
+          | | | |_   _|_   _|  _ \    |___ \/ |( _ )              
+          | |_| | | |   | | | |_) |____ __) | |/ _ \              
+          |  _  | | |   | | |  __/_____/ __/| | (_) |             
+  ____    |_| |_| |_|   |_|_|_|_ ___  |_____|_|\___/____  ____  _ 
+ / ___|  / \      / \     |_   _/ _ \ / _ \| |     |  _ \/ ___|/ |
+| |     / _ \    / _ \ _____| || | | | | | | |     | |_) \___ \| |
+| |___ / ___ \  / ___ \_____| || |_| | |_| | |___ _|  __/ ___) | |
+ \____/_/   \_\/_/   \_\    |_| \___/ \___/|_____(_)_|   |____/|_|
 
 "@
 Write-Host $asciiBanner -ForegroundColor DarkYellow
@@ -38,10 +31,9 @@ Write-Host ""
 switch ($Choice) {
     "1" {
         Write-Host "[INFO] Launching Scan Only mode..." -ForegroundColor Green
-        $Command = "-Command & '$ToolPath' -ScanOnly"
-        $Process = Start-Process $PS5Path -ArgumentList "-NoExit", "-ExecutionPolicy", "Bypass", $Command -WindowStyle Normal -PassThru
-        $Process.WaitForExit()
+        & $PS5Path -NoExit -ExecutionPolicy Bypass -File $ToolPath -ScanOnly
         Remove-Item $ToolPath -Force
+        #exit 0
     }
     "2" {
         Write-Host "[INFO] Launching Full Tool (requires elevation)..." -ForegroundColor Yellow
