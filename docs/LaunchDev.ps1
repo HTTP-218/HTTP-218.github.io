@@ -39,6 +39,7 @@ while ($true) {
             Write-Host "[INFO] Launching Scan Only mode..." -ForegroundColor Green
             & $PS5Path -NoExit -ExecutionPolicy Bypass -File $ToolPath -ScanOnly
             Remove-Item $ToolPath -Force
+            break
         }
         "2" {
             Write-Host "[INFO] Launching Full Tool (requires elevation)..." -ForegroundColor Yellow
@@ -52,7 +53,7 @@ while ($true) {
         }
         "0" {
             Write-Host "Bye!"
-            break
+            exit 0
         }
         default {
             Write-Host "[ERROR] Invalid selection. Please choose a valid option." -ForegroundColor Red
