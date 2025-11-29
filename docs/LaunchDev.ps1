@@ -4,7 +4,7 @@
 #                                                                                                    #
 ######################################################################################################
 
-$RepoURL = "https://raw.githubusercontent.com/HTTP-218/Endpoint_Verification/feature/eol-warning/CAA-Tool.ps1"
+$RepoURL = "https://raw.githubusercontent.com/HTTP-218/Endpoint_Verification/dev/CAA-Tool.ps1"
 $PS5Path = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
 $ToolPath = Join-Path $env:TEMP "CAA-Tool.ps1"
 Invoke-RestMethod $RepoURL -OutFile $ToolPath 
