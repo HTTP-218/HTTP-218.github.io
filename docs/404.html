@@ -1,0 +1,47 @@
+---
+layout: default
+title: Page Not Found
+no_menu: true
+---
+
+<style>
+/* Full-page container */
+.error-container {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+}
+
+/* Background image */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url('{{ site.baseurl }}/images/404.png') no-repeat center center/cover;
+  z-index: -2;
+}
+
+/* Plain text link positioned over background */
+.error-container a {
+  position: fixed;
+  top: 49.5%;    /* adjust this to move vertically */
+  left: 41%;   /* centers horizontally */
+  transform: translate(-50%, -50%);
+  color: blue; /* link color */
+  font-size: 3rem;
+  font: "Comic Sans MS", "Comic Sans", cursive;
+  text-decoration: none;
+}
+</style>
+
+<div class="error-container">
+  <a href="{{ site.baseurl }}/"><strong>Home</strong></a>
+</div>
+
+
+
+
+
+
+
+
