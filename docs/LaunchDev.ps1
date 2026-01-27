@@ -7,7 +7,6 @@
 $RepoURL = "https://raw.githubusercontent.com/HTTP-218/Endpoint_Verification/feature/update-chrome/CAA-Tool.ps1"
 $PS5Path = "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
 $ToolPath = Join-Path $env:TEMP "CAA-Tool.ps1"
-Invoke-RestMethod $RepoURL -OutFile $ToolPath 
 
 
 $asciiBanner = @"
@@ -37,6 +36,7 @@ while ($true) {
     switch ($Choice) {
         "1" {
             Write-Host "[INFO] Launching Scan Only mode..." -ForegroundColor Green
+            Invoke-RestMethod $RepoURL -OutFile $ToolPath 
             & $PS5Path -NoExit -ExecutionPolicy Bypass -File $ToolPath -ScanOnly
             Remove-Item $ToolPath -Force
         }
